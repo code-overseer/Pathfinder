@@ -24,6 +24,7 @@ struct Vector3 {
   float operator*(Vector3 const &v) const;
   Vector3 operator*(float const &c) const;
   Vector3 operator/(float const &c) const;
+  std::string toString() const;
   
   static Vector3 normalize(Vector3 &v);
   static Vector3 one();

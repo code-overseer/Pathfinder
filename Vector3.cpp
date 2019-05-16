@@ -1,4 +1,6 @@
 #include "Vector3.hpp"
+#include <sstream>
+using namespace std;
 
 Vector3 Vector3::operator*(float const &c) const {
   return Vector3(c * x, c * y, c * z);
@@ -34,6 +36,12 @@ float Vector3::sqrMagnitude() const {
 
 float Vector3::magnitude() const {
   return sqrt(sqrMagnitude());
+}
+
+string Vector3::toString() const {
+  stringstream stream;
+  stream << fixed << setprecision(2) << x << ", " << y << ", " << z;
+  return stream.str();
 }
 
 Vector3 Vector3::normalize(Vector3 &v) {
@@ -75,9 +83,7 @@ Vector3 Vector3::deserialize(nlohmann::json &j) {
 }
 
 std::ostream& operator<<(std::ostream& os, Vector3 const &v) {
-  std::streamsize s = os.precision(8);
-  os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
-  os.precision(s);
+  os << "(" << v.toString() << ")";
   return os;
 }
 

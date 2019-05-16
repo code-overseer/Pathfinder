@@ -14,7 +14,7 @@
 #include "Vector3.hpp"
 #include <string>
 #include <nlohmann/json.hpp>
-
+#include <unordered_map>
 using namespace std;
 using json = nlohmann::json;
 
@@ -41,11 +41,11 @@ int main(int argc, const char * argv[]) {
   }
   
   for (auto i = buildings->begin(); i != buildings->end(); i++) {
-    cout << i->position << endl;
+    cout << i->position.toString() << endl;
   }
   
   for (auto i = nfz->begin(); i != nfz->end(); i++) {
-    cout << i->position << endl;
+    cout << i->position.toString() << endl;
   }
   
   delete buildings;

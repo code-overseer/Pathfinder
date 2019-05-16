@@ -24,7 +24,6 @@ private:
   Vector3* _destination = nullptr;
   
   /* Functions */
-  static int _hashVector(Vector3 v);
   static void _rotationY(float degree, Vector3& v);
   static Vector3 _getPerp(Vector3& v);
   
