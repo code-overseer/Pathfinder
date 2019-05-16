@@ -28,7 +28,7 @@ nlohmann::json Obstacle::serialize() const {
   return j;
 }
 
-Obstacle::Obstacle(nlohmann::json &j) :
+Obstacle::Obstacle(nlohmann::json const &j) :
   position(Vector3::deserialize(j["position"])),
   size(Vector3::deserialize(j["size"])),
   orientation(Vector3::deserialize(j["orientation"])),
@@ -42,6 +42,6 @@ Obstacle::Obstacle(nlohmann::json &j) :
     }
 }
 
-Obstacle Obstacle::deserialize(nlohmann::json &j) {
+Obstacle Obstacle::deserialize(nlohmann::json const &j) {
   return Obstacle(j);
 }

@@ -32,9 +32,8 @@ struct Vector3 {
   static Vector3 down();
   static Vector3 right();
   static Vector3 forward();
-  static Vector3 deserialize(nlohmann::json &j);
-  
-  static float dot(Vector3 const &l, Vector3 const &r);
+  static Vector3 deserialize(nlohmann::json const &j);
+  static float distance(Vector3 const &a, Vector3 const &b);
 };
 
 Vector3 operator*(float const &c, Vector3 const &v);

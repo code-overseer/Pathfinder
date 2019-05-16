@@ -74,11 +74,11 @@ Vector3 Vector3::forward() {
   return Vector3(0, 0, 1);
 }
 
-float dot(Vector3 const &l, Vector3 const &r) {
-  return l * r;
+float Vector3::distance(Vector3 const &a, Vector3 const &b) {
+  return (b - a).magnitude();
 }
 
-Vector3 Vector3::deserialize(nlohmann::json &j) {
+Vector3 Vector3::deserialize(nlohmann::json const &j) {
   return Vector3(j["x"], j["y"], j["z"]);
 }
 

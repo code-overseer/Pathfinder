@@ -15,10 +15,10 @@ struct Obstacle {
   Vector3 normals[4]  = {Vector3(),Vector3(),Vector3(),Vector3()};
   Vector3 verts[4] = {Vector3(),Vector3(),Vector3(),Vector3()};
   
-  Obstacle(nlohmann::json &j);
+  Obstacle(nlohmann::json const &j);
   
   nlohmann::json serialize() const;
   
-  static Obstacle deserialize(nlohmann::json &j);
+  static Obstacle deserialize(nlohmann::json const &j);
 };
 #endif /* StaticObstacle_h */

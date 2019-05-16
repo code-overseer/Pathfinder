@@ -3,8 +3,12 @@
 using namespace std;
 using json = nlohmann::json;
 
-void Pathfinder::parseBuildingData(std::string const &data) {
-  buildings = new list<Obstacle*>();
+Pathfinder::Pathfinder(string const &filename) {
+  loadBuildings(filename);
+}
+
+void Pathfinder::parseBuildingData(string const &data) {
+  buildings = new vector<Obstacle*>();
   json jso = json::parse(data);
   
   for (auto i = jso["Buildings"].begin(); i != jso["Buildings"].end(); i++) {
@@ -12,7 +16,7 @@ void Pathfinder::parseBuildingData(std::string const &data) {
   }
 }
 
-void Pathfinder::loadBuildings(string filename) {
+void Pathfinder::loadBuildings(string const &filename) {
   ifstream datafile(filename);
   string data;
   datafile.seekg(0, ios::end);
@@ -31,10 +35,7 @@ Pathfinder::~Pathfinder() {
     }
     delete buildings;
   }
-  if (noFlyZones) {
-    for (auto i = noFlyZones->begin(); i != noFlyZones->end(); i++) {
-      delete *i;
-    }
-    delete noFlyZones;
-  }
+  
+  if (noFlyZones) delete noFlyZones;
+  
 }
