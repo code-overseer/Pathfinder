@@ -2,7 +2,6 @@
 #define RayPath_hpp
 
 #include <iostream>
-#include <string>
 #include "Pathfinder.hpp"
 #include <MinHeap.hpp>
 
@@ -17,9 +16,10 @@ private:
   float const _Rd = 3;
   float const _epsilon = 0.001;
   float const hubAlt[2] = { 500, 510 };
-  float const* _altitudes = nullptr;
-  int _droneCount;
+  int const _altSize = (int)((_maxAlt - _minAlt)/_altDiv + 1);
+  float* _altitudes = nullptr;
   int* _assigned = nullptr;
+  int _droneCount;  
   Vector3* _origin = nullptr;
   Vector3* _destination = nullptr;
   
@@ -37,6 +37,7 @@ private:
   std::list<Vector3> _navigate(Vector3 start, Vector3 end, float altitude);
 public:
   ~RayPath();
+  float const* altitudes();
   std::string getRoute(std::string const &raw) override;
   void updateGameState(Vector3 dronePos[], Obstacle nfzs[]);
   void chooseAltitude();

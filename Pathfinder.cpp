@@ -4,11 +4,11 @@ using namespace std;
 using json = nlohmann::json;
 
 void Pathfinder::parseBuildingData(std::string const &data) {
-  buildings = new list<Obstacle>();
+  buildings = new list<Obstacle*>();
   json jso = json::parse(data);
   
   for (auto i = jso["Buildings"].begin(); i != jso["Buildings"].end(); i++) {
-    buildings->push_back(Obstacle(*i));
+    buildings->push_back(new Obstacle(*i));
   }
 }
 
@@ -25,8 +25,16 @@ void Pathfinder::loadBuildings(string filename) {
 }
 
 Pathfinder::~Pathfinder() {
-  if (buildings)
+  if (buildings) {
+    for (auto i = buildings->begin(); i != buildings->end(); i++) {
+      delete *i;
+    }
     delete buildings;
-  if (noFlyZones)
+  }
+  if (noFlyZones) {
+    for (auto i = noFlyZones->begin(); i != noFlyZones->end(); i++) {
+      delete *i;
+    }
     delete noFlyZones;
+  }
 }

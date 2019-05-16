@@ -12,8 +12,8 @@ class Pathfinder {
 public:
   virtual ~Pathfinder();
 protected:
-  std::list<Obstacle>* buildings = nullptr;
-  std::list<Obstacle>* noFlyZones = nullptr;
+  std::list<Obstacle*>* buildings = nullptr;
+  std::list<Obstacle*>* noFlyZones = nullptr;
   
   void loadBuildings(std::string filename);
   
