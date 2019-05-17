@@ -7,10 +7,13 @@ set_target_properties(Pathfinder PROPERTIES VERSION ${PROJECT_VERSION})
 
 set(EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
 
+include(ExternalProject)
+
 ExternalProject_Add(json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
 )
+
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 add_subdirectory(external/json)
