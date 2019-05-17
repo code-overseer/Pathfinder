@@ -11,7 +11,7 @@ void Pathfinder::parseBuildingData(string const &data) {
   buildings = new vector<Obstacle*>();
   json jso = json::parse(data);
   
-  for (auto i = jso["Buildings"].begin(); i != jso["Buildings"].end(); i++) {
+  for (auto i = jso["buildings"].begin(); i != jso["buildings"].end(); i++) {
     buildings->push_back(new Obstacle(*i));
   }
 }

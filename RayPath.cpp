@@ -301,13 +301,16 @@ string RayPath::getRoute(string const &raw) {
   vector<Vector3> dronePos;
   for (auto i = data["dronePositions"].begin();
        i != data["dronePositions"].end(); i++) {
-    dronePos.push_back(Vector3::deserialize(*i));
+    dronePos.push_back(Vector3(*i));
   }
   
   updateDroneCount(dronePos);
   
-  _origin = Vector3::deserialize(data["origin"]);
-  _destination = Vector3::deserialize(data["destination"]);
+  _origin = Vector3(data["origin"]);
+  _destination = Vector3(data["destination"]);
+  _origin.y = 0;
+  _destination.y = 0;
+  
   vector<Vector3> route;
   try {
     route = _route(!data["onJob"]);

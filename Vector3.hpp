@@ -10,6 +10,7 @@ struct Vector3 {
   Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
   Vector3(float n[3]) : x(n[0]), y(n[1]), z(n[2]) {}
   Vector3() : x(0), y(0), z(0) {}
+  Vector3(nlohmann::json const &j) : x(j["x"]), y(j["y"]), z(j["z"]) {}
   float x;
   float y;
   float z;

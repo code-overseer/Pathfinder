@@ -29,16 +29,16 @@ nlohmann::json Obstacle::serialize() const {
 }
 
 Obstacle::Obstacle(nlohmann::json const &j) :
-  position(Vector3::deserialize(j["position"])),
-  size(Vector3::deserialize(j["size"])),
-  orientation(Vector3::deserialize(j["orientation"])),
+  position(Vector3(j["position"])),
+  size(Vector3(j["size"])),
+  orientation(Vector3(j["orientation"])),
   diag(j["diag"]),
-  dz(Vector3::deserialize(j["dz"])),
-  dx(Vector3::deserialize(j["dx"])),
+  dz(Vector3(j["dz"])),
+  dx(Vector3(j["dx"])),
   mu(j["mu"]) {
     for (int i = 0; i < 4; i++) {
-      normals[i] = Vector3::deserialize(j["normals"][i]);
-      verts[i] = Vector3::deserialize(j["verts"][i]);
+      normals[i] = Vector3(j["normals"][i]);
+      verts[i] = Vector3(j["verts"][i]);
     }
 }
 

@@ -1,24 +1,20 @@
-//
-//  main.cpp
-//  PathFinder
-//
-//  Created by Bryan Wong on 15/05/2019.
-//  Copyright © 2019 Bryan Wong. All rights reserved.
-//
-
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
 #include <list>
-#include "Obstacle.h"
-#include "Vector3.hpp"
 #include <string>
 #include <nlohmann/json.hpp>
-#include <unordered_map>
+#include "Obstacle.h"
+#include "Vector3.hpp"
+#include "RayPath.hpp"
+#include <time.h>
+
 using namespace std;
 using json = nlohmann::json;
 
 int main(int argc, const char * argv[]) {
+  clock_t T = 0;
+  int n = 100;
   string CODE_DIR = std::getenv("HOME");
   CODE_DIR += "/Documents/C++/PathFinder/PathFinder/TestCase.json";
   ifstream datafile(CODE_DIR);
@@ -29,27 +25,15 @@ int main(int argc, const char * argv[]) {
   data.assign(istreambuf_iterator<char>(datafile), istreambuf_iterator<char>());
   datafile.close();
   
-  list<Obstacle>* buildings = new list<Obstacle>();
-  list<Obstacle>* nfz = new list<Obstacle>();
-  json jso = json::parse(data);
-  
-  for (auto i = jso["Buildings"].begin(); i != jso["Buildings"].end(); i++) {
-    buildings->push_back(Obstacle(*i));
-  }
-  for (auto i = jso["NFZs"].begin(); i != jso["NFZs"].end(); i++) {
-    nfz->push_back(Obstacle(*i));
+  RayPath pathfinder(CODE_DIR);
+  for (int i = 0; i < n; i++) {
+    clock_t t = clock();
+    cout << pathfinder.getRoute(data) << endl;
+    t = clock() - t;
+    T += t;
   }
   
-  for (auto i = buildings->begin(); i != buildings->end(); i++) {
-    cout << i->position.toString() << endl;
-  }
-  
-  for (auto i = nfz->begin(); i != nfz->end(); i++) {
-    cout << i->position.toString() << endl;
-  }
-  
-  delete buildings;
-  delete nfz;
+  cout<<"time: " << ((float) T/n)/CLOCKS_PER_SEC<< " seconds"<<endl;
   
   return 0;
 }

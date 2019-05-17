@@ -9,7 +9,7 @@
 class RayPath : public Pathfinder {
 private:
   /* Data */
-  float const _maxAlt = 150;
+  float const _maxAlt = 250;
   float const _minAlt = 60;
   float const _altDiv = 10;
   float const _buildingDiv = 30;
@@ -50,6 +50,7 @@ private:
   
   void _getAltitudes();
   int _chooseAltitude(Vector3 const &origin, Vector3 const &dest) const;
+
 public:
   RayPath(std::string const & filename);
   virtual ~RayPath();
