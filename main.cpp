@@ -5,7 +5,7 @@
 #include <string>
 #include <time.h>
 #include <nlohmann/json.hpp>
-#include "Obstacle.h"
+#include "Obstacle.hpp"
 #include "Vector3.hpp"
 #include "RayPath.hpp"
 
@@ -14,7 +14,7 @@ using json = nlohmann::json;
 
 int main(int argc, const char * argv[]) {
   clock_t T = 0;
-  int n = 100;
+  int n = 1;
   string CODE_DIR = std::getenv("HOME");
   CODE_DIR += "/Documents/C++/PathFinder/PathFinder/TestCase.json";
   ifstream datafile(CODE_DIR);

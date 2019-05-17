@@ -145,7 +145,7 @@ int RayPath::_findIntersect(Obstacle &obs, Vector3 const &start,
                             Vector3 const &end, int i[2]) const {
   auto dir = end - start;
   auto _dir = dir.normalized();
-  auto path = [&, dir, start](float m) -> Vector3{return start + (m * dir);};
+  auto path = [&, dir, start](float m) {return start + (m * dir);};
   int num = 0;
   
   float mu[] = { 0, 0, 0, 0 };
@@ -282,8 +282,7 @@ std::vector<Vector3> RayPath::_navigate(Vector3 start, Vector3 end,
     for (auto i = lst.begin() + 1; i != lst.end(); i++) {
       waypoints.push_back(*i);
     }
-  }
-  else {
+  } else {
     waypoints.push_back(end);
   }
   stack--;

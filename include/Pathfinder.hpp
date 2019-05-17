@@ -1,7 +1,7 @@
 #ifndef PathFinder_hpp
 #define PathFinder_hpp
 
-#include "Obstacle.h"
+#include "Obstacle.hpp"
 #include <vector>
 #include <string>
 #include <nlohmann/json.hpp>

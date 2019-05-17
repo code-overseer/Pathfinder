@@ -1,8 +1,8 @@
-#ifndef StaticObstacle_h
-#define StaticObstacle_h
+#ifndef StaticObstacle_hpp
+#define StaticObstacle_hpp
 
-#include<nlohmann/json.hpp>
-#include"Vector3.hpp"
+#include <nlohmann/json.hpp>
+#include "Vector3.hpp"
 
 struct Obstacle {
   Vector3 position;

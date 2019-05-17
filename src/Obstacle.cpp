@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Obstacle.h"
+#include "Obstacle.hpp"
 #include <nlohmann/json.hpp>
 
 nlohmann::json Obstacle::serialize() const {
