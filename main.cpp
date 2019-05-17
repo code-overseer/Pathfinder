@@ -3,11 +3,11 @@
 #include <cstdlib>
 #include <list>
 #include <string>
+#include <time.h>
 #include <nlohmann/json.hpp>
 #include "Obstacle.h"
 #include "Vector3.hpp"
 #include "RayPath.hpp"
-#include <time.h>
 
 using namespace std;
 using json = nlohmann::json;

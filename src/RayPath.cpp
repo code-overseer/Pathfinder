@@ -1,6 +1,5 @@
 #include "RayPath.hpp"
 #include <cmath>
-#include <functional>
 #include <set>
 #include <exception>
 using namespace std;

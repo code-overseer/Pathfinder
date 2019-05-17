@@ -2,9 +2,11 @@
 #define RayPath_hpp
 
 #include <iostream>
-#include "Pathfinder.hpp"
 #include <vector>
 #include <queue>
+#include <functional>
+#include "Pathfinder.hpp"
+
 typedef std::priority_queue<Obstacle*, std::vector<Obstacle*>, std::function<bool(Obstacle*, Obstacle*)>> BuildingHeap;
 class RayPath : public Pathfinder {
 private:
