@@ -117,11 +117,11 @@ vector<Vector3> RayPath::_route(bool hubReturn) {
   return waypts;
 }
 
-MinHeap<Obstacle*> RayPath::_blockers(Vector3 const &start, Vector3 const &end,
+BuildingHeap RayPath::_blockers(Vector3 const &start, Vector3 const &end,
                                       float alt) const {
   auto dir = end - start;
-  auto obstacles = MinHeap<Obstacle*>([](Obstacle* a, Obstacle* b) -> int{
-    return (a->mu <= b->mu) ? -1 : 1;
+  auto obstacles = BuildingHeap([](Obstacle* l, Obstacle* r) {
+    return (l->mu >= r->mu);
   });
   
   auto perp = _getPerp(dir).normalized() * _Ra;
@@ -134,7 +134,7 @@ MinHeap<Obstacle*> RayPath::_blockers(Vector3 const &start, Vector3 const &end,
         auto nu = ((start - obs->position) * perp) / perp.sqrMagnitude();
         if (nu <= 1 && nu >= -1 && mu <= 1 + _Ra/dir.magnitude() && mu >= 0) {
           obs->mu = mu;
-          obstacles.add(obs);
+          obstacles.push(obs);
         }
       }
     }
@@ -235,11 +235,14 @@ std::vector<Vector3> RayPath::_navigate(Vector3 start, Vector3 end,
   auto dir = end - start;
   if (dir.magnitude() < _epsilon) return waypoints;
   auto buildings = _blockers(start, end, altitude);
-  MinHeap<Vector3> poss([&, start, dir](Vector3 a, Vector3 b) -> int{
+  
+  static auto cmp = [&, start, dir](Vector3 a, Vector3 b) {
     auto mua = ((a - start) * dir) / dir.sqrMagnitude();
     auto mub = ((b - start) * dir) / dir.sqrMagnitude();
-    return (mua <= mub) ? -1 : 1;
-  });
+    return (mua > mub);
+  };
+  
+  priority_queue<Vector3, vector<Vector3>, decltype(cmp)> poss(cmp);
   set<string> errors;
   
   bool intersected = false;
@@ -248,26 +251,27 @@ std::vector<Vector3> RayPath::_navigate(Vector3 start, Vector3 end,
     if (_findIntersect(*i, start, end, indices)) {
       intersected = true;
       auto v = _findWaypoint(*i, start, end, indices);
-      poss.add(v);
+      poss.push(v);
       if (indices[1] == -1) errors.insert(v.toString());
     }
   }
   
   int k = 0;
-  while (!buildings.isEmpty() && k < 5) {
-    auto obs = buildings.remove();
+  while (!buildings.empty() && k < 5) {
+    auto obs = buildings.top();
+    buildings.pop();
     if (_findIntersect(*obs, start, end, indices) > 0) {
       k++;
       intersected = true;
       auto v = _findWaypoint(*obs, start, end, indices);
-      poss.add(v);
+      poss.push(v);
       if (indices[1] == -1) errors.insert(v.toString());
     }
   }
   if (intersected) {
-    auto nxt = poss.remove();
-    poss.clear();
-    buildings.clear();
+    auto nxt = poss.top();
+    while (!poss.empty()) poss.pop();
+    while (!buildings.empty()) buildings.pop();
     auto lst = _navigate(start, nxt, altitude);
     for (auto i = lst.begin() + 1; i != lst.end(); i++) {
       waypoints.push_back(*i);

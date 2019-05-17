@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include "Pathfinder.hpp"
-#include "heaps/MinHeap.hpp"
 #include <vector>
-
+#include <queue>
+typedef std::priority_queue<Obstacle*, std::vector<Obstacle*>, std::function<bool(Obstacle*, Obstacle*)>> BuildingHeap;
 class RayPath : public Pathfinder {
 private:
   /* Data */
@@ -32,7 +32,7 @@ private:
   void _getBuildings();
   int _countAt(int i, std::vector<Vector3> &dronePos) const;
   
-  MinHeap<Obstacle*> _blockers(Vector3 const &start, Vector3 const &end,
+  BuildingHeap _blockers(Vector3 const &start, Vector3 const &end,
                                float alt) const;
   
   int _findIntersect(Obstacle &obs, Vector3 const &start,
